@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Kuchu Puchu Birthday"
+description = "A cinematic, interactive birthday gift journey with animated reveals, personal photos, video, and audio for Shristi."
+version = "1.0.0"
+id = "artifacts/kuchu-puchu-birthday"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22439
+
+[services.development]
+run = "pnpm --filter @workspace/kuchu-puchu-birthday run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kuchu-puchu-birthday", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/kuchu-puchu-birthday/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22439"
+BASE_PATH = "/"
